@@ -33,7 +33,7 @@ def displayWords2():
     allWords="displayWords.txt"
     with open (allWords) as words:
         lines=words.readlines()
-        return(lines)
+        
 
 
 def validWords():#create a list of words with over 3 characters
@@ -64,7 +64,7 @@ def display_home():     #home page
 def display_game():
     #generate random word
      session['start']=datetime.datetime.utcnow()#start the timer
-     lines=displayWords2()
+     lines=displayWords()
      lines = [l.strip() for l in lines]
      print("game1")
      session['randWord']=random.choice(lines)
@@ -170,7 +170,8 @@ def saveForm():
                                    theWords=invalList,
                                    title='unlucky',
                                    gametime=session['endtime'],
-                                   game_url=url_for('display_game')
+                                   game_url=url_for('display_game'),
+                                   home_url=url_for('display_home')
                                    )
     else:
         return redirect(url_for("display_game"))    
