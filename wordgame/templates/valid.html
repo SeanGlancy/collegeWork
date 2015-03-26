@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block body%}
+
+You entered {{theWords}}
+You took {{ gametime }}
+{% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+<ul>
+    <li>play the game again <a href="{{game_url}}"> Game</a>
+    <li>Check the high scores <a href="{{score_url}}"> Leaderboard</a>.
+</ul>
+
+{%endblock %}

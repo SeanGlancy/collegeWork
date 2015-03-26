@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block body%}
+<p align='center'> Welcome to the word game!
+<br>A random word will be displayed
+<br>Enter seven words with the letters form the random word
+<br>easy right. Lets see.
+<br>
+
+
+<form align='center' action="{{game_url}}">
+    <input type="submit" value="Play the game">
+</form>
+<ul>
+    <li>Check the high scores <a href="{{leaderBoard_url}}"> Leaderboard</a>.
+</ul>
+
+{%endblock %}

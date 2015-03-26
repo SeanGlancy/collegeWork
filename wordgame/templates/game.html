@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block body%}
+
+<form action="{{ save_words }}" method="POST">
+ {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <p>
+    Enter your name: 
+    <input type="TEXT" name="user_name">
+    </p>
+
+    Your random Word is {{ word }}<br><br>
+    Start time is {{ time }}
+        <br>
+     Please enter the words: <br>
+        <input type="TEXT" name="word0"><br>
+        <input type="TEXT" name="word1"><br>
+        <input type="TEXT" name="word2"><br>
+        <input type="TEXT" name="word3"><br>
+        <input type="TEXT" name="word4"><br>
+        <input type="TEXT" name="word5"><br>
+        <input type="TEXT" name="word6"><br>
+
+        <br>
+    <input type="SUBMIT" value="submit">
+    <li>Back to home page.<a href="{{home_url}}">home</a>.
+</form>
+{%endblock %}
