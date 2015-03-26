@@ -12,7 +12,8 @@ if __name__ == "__main__":
     
 app.logger.addHandler(logging.StreamHandler(sys.stdout))
 app.logger.setLevel(logging.ERROR)
-def displayWords():  #get the words with seven or more letters
+def displayWords(): 
+ #get the words with seven or more letters
     
     allWords="macList.txt"
     testcount=0
@@ -28,7 +29,13 @@ def displayWords():  #get the words with seven or more letters
             #validWords()
             print("end of displayWords")
             return(lines)
-            
+def displayWords2():
+    allWords="displayWords.txt"
+    with open (allWords) as words:
+        lines=words.readlines()
+        return(lines)
+
+
 def validWords():#create a list of words with over 3 characters
 
     allWords='macList.txt'
@@ -57,7 +64,7 @@ def display_home():     #home page
 def display_game():
     #generate random word
      session['start']=datetime.datetime.utcnow()#start the timer
-     lines=displayWords()
+     lines=displayWords2()
      lines = [l.strip() for l in lines]
      print("game1")
      session['randWord']=random.choice(lines)
@@ -163,8 +170,7 @@ def saveForm():
                                    theWords=invalList,
                                    title='unlucky',
                                    gametime=session['endtime'],
-                                   game_url=url_for('display_game'),
-                                   home_url=url_for('display_home')
+                                   game_url=url_for('display_game')
                                    )
     else:
         return redirect(url_for("display_game"))    
