@@ -33,7 +33,8 @@ def displayWords2():
     allWords="displayWords.txt"
     with open (allWords) as words:
         lines=words.readlines()
-        
+        return(lines)
+
 
 
 def validWords():#create a list of words with over 3 characters
