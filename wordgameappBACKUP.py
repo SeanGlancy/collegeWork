@@ -109,7 +109,7 @@ def valid(inputList):
         allgood='true'
         random= session['randWord']
         
-        for userwords in inputList and allgood =='true':
+        while userwords in inputList and allgood =='true':
             
             if userwords in lines:  #check if word is in dictionary  
                 if inputList.count(userwords) >1: #count the number of times the user word appears in the wordlist

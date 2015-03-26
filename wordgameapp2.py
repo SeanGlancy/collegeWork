@@ -1,10 +1,17 @@
 from flask import Flask, render_template, url_for, request, redirect,flash,session
 import random,time,datetime,pickle
- 
+import sys
+import logging
+
 
 app=Flask(__name__)
 
+if __name__ == "__main__":
+    app.run(debug=True)
 
+    
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.ERROR)
 def displayWords():  #get the words with seven or more letters
     
     allWords="macList.txt"
@@ -17,8 +24,9 @@ def displayWords():  #get the words with seven or more letters
                      x2 = x.replace("\n", "")
                      print(x2.lower(),file=log)     #print it to the text file
                      testcount=testcount+1
-            print("7 letters+ count was ",testcount)
-            validWords()
+            print("7 letters count was ",testcount)
+            #validWords()
+            print("end of displayWords")
             return(lines)
             
 def validWords():#create a list of words with over 3 characters
@@ -51,6 +59,7 @@ def display_game():
      session['start']=datetime.datetime.utcnow()#start the timer
      lines=displayWords()
      lines = [l.strip() for l in lines]
+     print("game1")
      session['randWord']=random.choice(lines)
 
      return render_template('game.html', 
@@ -69,10 +78,11 @@ def score(user): # create a log with the time to finish the game + the users nam
 @app.route('/save', methods=['POST'])
 def saveForm():
     name= True
+    print("save 1")
     if request.form['user_name'] == '':
         name= False
         flash("Sorry. You must tell me your name. Try again")  #ensure that the user has entered a name
-        #print(request.form['user_name'])
+    print('save2')
     session['endtime']=str(datetime.datetime.utcnow() - session['start']) #work out the time taken
     inputList=[]
     inputList.append(request.form['word0'])
@@ -83,31 +93,33 @@ def saveForm():
     inputList.append(request.form['word5'])
     inputList.append(request.form['word6']) #get each of the words from the text boxes
     #validate words
+    print("save3")
     allWords='validWords.txt'
     with open (allWords) as words:
+        print("save4")
         lines=words.readlines()
         lines = [l.strip() for l in lines]
-        #set dictionary
+        print("save5")
         invalList=[]
         allgood='true'
-        random= session['randWord']
-
+        
+        print("save form 1")
         for userwords in inputList:
-            
+            print("save form loop")
             if allgood:
                 if userwords in lines:  #check if word is in dictionary  
                     if inputList.count(userwords) >1: #count the number of times the user word appears in the wordlist
                         print("word already entered")
                         allgood='false'
                         invalList.append(userwords)
-                        if random == userwords:  # check if word is the source word 
+                        if session['randWord'] == userwords:  # check if word is the source word 
                                print("same word")
                                allgood='false'
                                invalList.append(userwords)
                     else:
                          length=len(userwords)
                          tempList=[]
-                         for y in random:
+                         for y in session['randWord']:
                                tempList.append(y)
                         
                          for y in userwords:
@@ -179,4 +191,4 @@ def getKey(item): # used to sort on the first item
     return item[0]
 
 app.config['SECRET_KEY'] = 'thisismyultimatesecretkeyofdoinvalListom'
-app.run(debug=True)
+
